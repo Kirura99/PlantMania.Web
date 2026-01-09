@@ -1,0 +1,162 @@
+﻿@model PlantMania.Web.ViewModels.Home.HomeDashboardViewModel
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container mt-5">
+
+    <!-- Hero -->
+    <div class="text-center mb-4">
+        <h1 class="display-5">PlantMania</h1>
+        <p class="lead">Forum for plant lovers: questions, answers, and useful posts.</p>
+
+        <div class="d-flex justify-content-center gap-2">
+            <a class="btn btn-primary" asp-controller="Forum" asp-action="Index">Go to Forum</a>
+
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a class="btn btn-outline-secondary" asp-controller="Forum" asp-action="Create">Create post</a>
+            }
+            else
+            {
+                <a class="btn btn-outline-secondary" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            }
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="row text-center g-2 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="border rounded p-3">
+                <div class="fs-4 fw-bold">@Model.UsersCount</div>
+                <div class="text-muted">Users</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="border rounded p-3">
+                <div class="fs-4 fw-bold">@Model.PostsCount</div>
+                <div class="text-muted">Posts</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="border rounded p-3">
+                <div class="fs-4 fw-bold">@Model.QuestionsCount</div>
+                <div class="text-muted">Questions</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="border rounded p-3">
+                <div class="fs-4 fw-bold">@Model.AnswersCount</div>
+                <div class="text-muted">Answers</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Block 1: Unanswered Questions -->
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="h5 mb-3">🔥 Questions waiting for answers</h3>
+
+                    @if (Model.UnansweredQuestions.Count == 0)
+                    {
+                        <div class="text-muted">No unanswered questions right now.</div>
+                    }
+                    else
+                    {
+                        <div class="list-group">
+                            @foreach (var q in Model.UnansweredQuestions)
+                            {
+                                <a class="list-group-item list-group-item-action"
+                                   asp-controller="Forum" asp-action="Details" asp-route-id="@q.Id">
+                                    <div class="fw-semibold">@q.Title</div>
+                                    <div class="text-muted small">
+                                        @q.CategoryName • @q.CreatedAtUtc.ToString("yyyy-MM-dd HH:mm")
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Block 2: Latest Activity -->
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="h5 mb-3">🕒 Latest activity</h3>
+
+                    @if (Model.LatestActivity.Count == 0)
+                    {
+                        <div class="text-muted">No activity yet.</div>
+                    }
+                    else
+                    {
+                        <ul class="list-group">
+                            @foreach (var a in Model.LatestActivity)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="fw-semibold">
+                                            @if (a.Kind == "Question")
+                                            {
+                                                <span>❓</span>
+                                            }
+                                            else if (a.Kind == "Answer")
+                                            {
+
+                                                <span>💬</span>
+                                            }
+                                            else
+                                            {
+
+                                                <span>📝</span>
+                                            }
+
+                                            @a.Kind:
+                                            <a asp-controller="Forum" asp-action="Details" asp-route-id="@a.PostId">@a.Title</a>
+                                        </div>
+                                        <div class="text-muted small">@a.CreatedAtUtc.ToString("yyyy-MM-dd HH:mm")</div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Block 3: Popular categories -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="h5 mb-3">📊 Popular categories</h3>
+
+                    @if (Model.PopularCategories.Count == 0)
+                    {
+                        <div class="text-muted">No categories stats yet.</div>
+                    }
+                    else
+                    {
+                        <div class="row g-2">
+                            @foreach (var c in Model.PopularCategories)
+                            {
+                                <div class="col-md-4">
+                                    <div class="border rounded p-3 h-100">
+                                        <div class="fw-semibold">@c.CategoryName</div>
+                                        <div class="text-muted">Posts: <strong>@c.PostsCount</strong></div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

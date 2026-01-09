@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Admin Panel";
+}
+
+<div class="container mt-4">
+    <h1>Admin Panel</h1>
+    <p>Welcome! You are logged in as an <strong>Admin</strong>.</p>
+
+    <hr />
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Articles</h5>
+                    <p class="card-text">Create, edit and publish articles.</p>
+                    <a class="btn btn-primary" asp-controller="AdminArticles" asp-action="Index">Open</a>
+
+                    
+
+                    
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Categories</h5>
+                    <p class="card-text">Add and edit categories.</p>
+                    <a class="btn btn-primary" asp-controller="AdminCategories" asp-action="Index">Open</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Moderation</h5>
+                    <p class="card-text">Review reports and moderate content.</p>
+                    <a class="btn btn-primary" asp-controller="AdminModeration" asp-action="Index">Open</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Tags</h5>
+                    <p class="card-text">Manage Tags.</p>
+                    <a class="btn btn-primary" asp-controller="AdminTags" asp-action="Index">Open</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Moderators</h5>
+                    <p class="card-text">Add or delete moderator role.</p>
+                    <a class="btn btn-primary" asp-controller="AdminUsers" asp-action="Moderator">Open</a>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
